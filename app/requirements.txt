@@ -1,0 +1,5 @@
+#flask # For local porposes
+boto3
+pydantic
+aws-lambda-powertools
+bcrypt
