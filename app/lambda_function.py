@@ -44,11 +44,9 @@ resolver = LambdaFunctionUrlResolver(cors=cors_config)
 resolver.include_router(router=router, prefix="/api/auth")
 
 def lambda_handler(event, context = None):
-    print(event)
     __setup_services()
 
     if "body" in event and type(event["body"]) is str:
         event["body"] = json.loads(event["body"])
 
     return resolver.resolve(event, context)
-
