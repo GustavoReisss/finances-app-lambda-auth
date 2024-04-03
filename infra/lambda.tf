@@ -4,8 +4,8 @@ resource "aws_lambda_function" "lambda" {
   runtime          = "python3.11"
   filename         = data.archive_file.code.output_path
   source_code_hash = data.archive_file.code.output_base64sha256
-  role             = aws_iam_role.lambda_role.arn
   layers           = [aws_lambda_layer_version.requirements_lambda_layer.arn]
+  role             = aws_iam_role.lambda_role.arn
   timeout          = 29
 
   environment {

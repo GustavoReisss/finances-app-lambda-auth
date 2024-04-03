@@ -1,11 +1,10 @@
 import json
-from aws_lambda_powertools.event_handler import LambdaFunctionUrlResolver, CORSConfig
+from aws_lambda_powertools.event_handler import APIGatewayHttpResolver, CORSConfig
 from aws_lambda_powertools.event_handler.api_gateway import Router
 from services.auth_service import AuthService
 from utils.parse_cookies import parse_cookies
 
-
-cors_config = CORSConfig(allow_credentials=True)
+cors_config = CORSConfig(allow_credentials=True, expose_headers=["Set-Cookie"], allow_headers=["Set-Cookie"])
 router = Router()
 
 __auth_service: AuthService = None
@@ -40,8 +39,8 @@ def logout():
     return __auth_service.logout(cookies_dict)
     
 
-resolver = LambdaFunctionUrlResolver(cors=cors_config)
-resolver.include_router(router=router, prefix="/api/auth")
+resolver = APIGatewayHttpResolver(cors=cors_config)
+resolver.include_router(router=router, prefix="")
 
 def lambda_handler(event, context = None):
     __setup_services()
